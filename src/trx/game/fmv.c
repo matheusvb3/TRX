@@ -255,6 +255,7 @@ static RESULT M_Play(const char *const file_name)
     const int32_t audio_id = M_OpenAudioStream(file_name);
     bool input_paused = false;
     bool paused = false;
+    bool resume_pending = false;
 
     g_OldInputDB = g_Input;
     Fader_InitTo(&render_ctx.pause_fader, 0.0f, 0.0f, 0.0f);
@@ -276,7 +277,12 @@ static RESULT M_Play(const char *const file_name)
         Overlay_Control();
         LUA_FireEvent(LUA_EVENT_TICK);
 
-        const bool should_pause = focus_paused || input_paused;
+        if (resume_pending
+            && !Fader_IsActive(&render_ctx.pause_fader)) {
+            resume_pending = false;
+        }
+
+        const bool should_pause = focus_paused || input_paused || resume_pending;
         if (should_pause != paused) {
             Video_SetPaused(video, should_pause);
             IGNORE(Audio_Stream_SetPaused(audio_id, should_pause));
@@ -302,6 +308,10 @@ static RESULT M_Play(const char *const file_name)
                 Fader_InitFromCurrent(
                     &render_ctx.pause_fader, input_paused ? 1.0f : 0.0f,
                     M_FADE_TIME);
+                    
+                if (!input_paused) {
+                    resume_pending = true;
+                }
             }
         } else if (
             (!paused
