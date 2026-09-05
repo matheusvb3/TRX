@@ -999,6 +999,7 @@ If you install everything correctly, your game directory should look more or les
 │   │   │   ├── bat_sprites.bin
 │   │   │   ├── binoculars.bin
 │   │   │   ├── cavern_door131_frames.bin
+│   │   │   ├── cavern_fd.bin
 │   │   │   ├── cavern_pickup_meshes.bin
 │   │   │   ├── cavern_sky.bin
 │   │   │   ├── cavern_textures.bin
@@ -1018,6 +1019,7 @@ If you install everything correctly, your game directory should look more or les
 │   │   │   ├── common_pickup_meshes.bin
 │   │   │   ├── compound_animating_bounds.bin
 │   │   │   ├── compound_cine.bin
+│   │   │   ├── compound_fd.bin
 │   │   │   ├── compound_patrol.bin
 │   │   │   ├── compound_textures.bin
 │   │   │   ├── crash_animating_bounds.bin
@@ -1069,6 +1071,7 @@ If you install everything correctly, your game directory should look more or les
 │   │   │   ├── madubu_textures.bin
 │   │   │   ├── menu_artefacts.bin
 │   │   │   ├── menu_artefacts_london.bin
+│   │   │   ├── mines_animating_bounds.bin
 │   │   │   ├── mines_textures.bin
 │   │   │   ├── misc_sprites.bin
 │   │   │   ├── nevada_animating_bounds.bin
@@ -1282,9 +1285,11 @@ If you install everything correctly, your game directory should look more or les
 │   ├── tr4
 │   │   ├── injections
 │   │   │   ├── font.bin
+│   │   │   ├── inventory_models.bin
 │   │   │   ├── karnak_fd.bin
 │   │   │   ├── lara_animations.bin
 │   │   │   ├── lara_outfits.bin
+│   │   │   ├── pickup_aid.bin
 │   │   │   ├── shadow_sprite.bin
 │   │   │   └── sparks_gfx.bin
 │   │   ├── modules
@@ -2384,6 +2389,7 @@ Inside `TRX.app`, `Contents/Resources` should use the same combined layout as th
     │   │   │   │   ├── bat_sprites.bin
     │   │   │   │   ├── binoculars.bin
     │   │   │   │   ├── cavern_door131_frames.bin
+    │   │   │   │   ├── cavern_fd.bin
     │   │   │   │   ├── cavern_pickup_meshes.bin
     │   │   │   │   ├── cavern_sky.bin
     │   │   │   │   ├── cavern_textures.bin
@@ -2403,6 +2409,7 @@ Inside `TRX.app`, `Contents/Resources` should use the same combined layout as th
     │   │   │   │   ├── common_pickup_meshes.bin
     │   │   │   │   ├── compound_animating_bounds.bin
     │   │   │   │   ├── compound_cine.bin
+    │   │   │   │   ├── compound_fd.bin
     │   │   │   │   ├── compound_patrol.bin
     │   │   │   │   ├── compound_textures.bin
     │   │   │   │   ├── crash_animating_bounds.bin
@@ -2454,6 +2461,7 @@ Inside `TRX.app`, `Contents/Resources` should use the same combined layout as th
     │   │   │   │   ├── madubu_textures.bin
     │   │   │   │   ├── menu_artefacts.bin
     │   │   │   │   ├── menu_artefacts_london.bin
+    │   │   │   │   ├── mines_animating_bounds.bin
     │   │   │   │   ├── mines_textures.bin
     │   │   │   │   ├── misc_sprites.bin
     │   │   │   │   ├── nevada_animating_bounds.bin
@@ -2667,9 +2675,11 @@ Inside `TRX.app`, `Contents/Resources` should use the same combined layout as th
     │   │   ├── tr4
     │   │   │   ├── injections
     │   │   │   │   ├── font.bin
+    │   │   │   │   ├── inventory_models.bin
     │   │   │   │   ├── karnak_fd.bin
     │   │   │   │   ├── lara_animations.bin
     │   │   │   │   ├── lara_outfits.bin
+    │   │   │   │   ├── pickup_aid.bin
     │   │   │   │   ├── shadow_sprite.bin
     │   │   │   │   └── sparks_gfx.bin
     │   │   │   ├── modules

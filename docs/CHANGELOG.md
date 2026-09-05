@@ -20,6 +20,7 @@
 - Fixed Lara being able to monkey roll too close to sector edges, resulting in her falling after the animation completes (#6459 / TRX1314, regression from 1.10)
 - Fixed Lara beginning to monkey roll for one frame despite being too close to the edge of a sector (#6459 / TRX1314, regression from 1.10)
 - Fixed Lara not being able to crawl backwards in certain sloped crawlspaces (OG bug) (TRX1322)
+- Fixed Lara being able to crouch/crawl into spaces with very low ceilings where she can become clamped, such as RX-Tech Mines room 159 (OG bug) (#6477 / TRX1331)
 
 **UI**
 - Added a fullscreen setting, so the window mode can be switched from the menu rather than only with Alt+Enter (Graphic Options → Rendering) (#6187 / TRX1036)
@@ -55,12 +56,14 @@
 - Fixed the Inverted look option not applying to the binoculars (#6431 / TRX1291)
 - Fixed the photo mode camera drifting upwards and overshooting when it is moved while pitched up or down (TRX1142)
 - Fixed the photo mode camera flickering and refusing to turn over when it is pitched past straight up or down, and turning in coarse steps while aimed near vertical (TRX1152)
+- Fixed photo mode showing the same animation frame while advancing the game a quarter of a frame at a time (TRX1353, regression from 1.9)
 
 **Developer console**
 - Added the `/outfit` console command, which shows or changes what Lara is wearing (TRX1070)
 - Added the `/golden` console command, which casts Lara in gold (TRX1070)
 - Added the `/fmv` console command, which plays one of the game's movies
 - Added the `/copy` console command, which copies another command's output to the clipboard (#6372 / TRX1226)
+- Improved the `/teleport` console command to avoid Lara ending up in a clamped position under low ceilings (TRX1346)
 - Changed the `/flip` console command to take a flip group, so `/flip 3` moves that group alone while `/flip` on its own moves them all (TRX173)
 - Changed the `/mod` console command to complete the names of the mods it can switch to
 - Changed the `/set` console command to complete the values a setting accepts, such as its enum values or on and off (TRX1174)
@@ -84,6 +87,9 @@
 - Added `snap_to_sector` and `keep_simulated` properties to pickups, which say whether a carrier's drop slides to the middle of its sector and whether the item goes on rotating and glowing once it lands
 - Added object references in strings files, so inventory entries can use the same name and description as their pickup
 - Added an object families file, so a mod can say which objects count as pickups, doors, creatures and the rest without a new build
+- Added a `trx.path` module, so a script can work with filesystem paths, join one with `/`, inspect its parts, find the game's own files, and read and write under the game's directories
+- Added a `trx.json` module, so a script can read and write JSON as text or files
+- Added `trx.math.from_sectors()` and `trx.math.to_sectors()`, so a script can say a length the way a level is laid out
 - Added an object links file, so a mod can say which pickup an inventory icon stands for, which slot a key goes into, and which box a weapon's rounds come in
 - Added `trx.objects.declare()`, so a script can define how its own object starts, updates, casts a shadow and saves its position
 - Added `trx.objects.borrow_content()`, so an object with no models of its own can use another object's meshes and animations
@@ -94,6 +100,7 @@
 - Changed a name a script mints for an object, sample or music track to be refused if it carries capitals, since a name is read in one case
 - Changed weather to follow flyby cameras (TRX1231)
 - Changed a missing or unknown `lara_outfit` in a level to fall back to the default outfit, rather than stopping the game from starting (TRX1087)
+- Changed pickup aids to not show for hidden reach-in, sarcophagus and crowbar modes (TRX1355)
 - Removed TR1's grenade pickup, freeing its model and inventory slots for objects of your own
 - Removed the golden outfits, which the engine now produces from any outfit, freeing their model slots for outfits of your own (TRX1070)
 - Fixed an outfit file naming a weapon the engine does not know leaving Lara without that weapon's meshes, with nothing said
@@ -111,10 +118,13 @@
 - Changed the save crystal behavior to give Lara a crystal when starting a game, if the mode is set to Saving (pickups), in line with the TR3 PS1 version (Gameplay → General → Crystal mode) (TRX1101)
 - Changed the option for Lara's braid to introduce an "auto" mode, which will automatically hide the braid for regular TR1 outfits, and show it for TR2+ outfits (Graphic options → General → Lara's braid) (#6446 / TRX1300)
 - Removed support for saves from TRX 1.0, and TR1X/TR2X era
+- Fixed not being able to load saves with overflowed values for Lara's distance travelled (TRX1368)
+- Fixed the distance travelled statistic to ignore when Lara is out of bounds to avoid skewing the value (OG bug) (TRX1368)
 
 **Music and sound**
 - Added an option to have Lara's sliding SFX stop as soon as she leaves a slope (#6294 / TRX1155)
 - Fixed crystal sound effects not playing if Lara collects one underwater (OG bug) (TRX1111)
+- Fixed looped sound effects, such as rolling boulders and the seaplane, clicking and crackling while they play (#6491 / TRX1348)
 
 **Rendering**
 - Added affine texture mapping, the uncorrected texturing of the PlayStation, so textures warp across large surfaces as the camera moves; the PlayStation presets turn it on (Graphic Options → Rendering → Affine texture mapping)
@@ -145,6 +155,7 @@
 
 **TR3**
 - Added crystals to each of the levels in The Lost Artefact, and made the crystal mode option visible (Gameplay → General → Crystal mode) (TRX1111)
+- Added an option to render black smoke emitters as white, as per the PC release (Gameplay → Fixes → Fix smoke emitters) (#6411 / TRX1288)
 - Changed the underwater light patterns to run in broad bands, as the original draws them, rather than fine speckle
 - Changed the underwater picture wobble to grow more gently on large screens, where it was too strong
 - Fixed z-fighting in rooms 21, 67 amd 122 in Jungle, and fixed incorrect lighting in room 87 (OG bugs) (TRX1088)
@@ -164,6 +175,11 @@
 - Fixed a faulty portal in Antarctica room 20 (TRX1246)
 - Fixed the explosion overlay sample not playing when firing weapons (TRX1255, regression from 1.0)
 - Fixed missing sound effects when Lara is killed by the T-Rex (#6414 / TRX1273, regression from 1.0)
+- Fixed Lara not behaving consistently on the ladder in High Security Compound room 93 (OG bug) (TRX1324)
+- Fixed a slope softlock in Meteorite Cavern room 12 (OG bug) (#6483 / TRX1338)
+- Fixed the fans in Thames Wharf room 77 by slowing them down before Lara re-enters the water after having solved the puzzle (#6410 / TRX1268)
+- Fixed incorrect UVs on some injected textures (TRX1366, regression from 1.9)
+- Fixed the grinders in RX-Tech Mines being clipped out of view at certain angles (OG bug) (TRX1347)
 
 **TR4**
 - Added the ability to skip in-game cutscenes (TRX1051)
@@ -183,6 +199,8 @@
 - Added the drifting specks the original shows in water rooms (TRX553)
 - Added the water ripples the original shows, in their size, their color and the speed they spread at (TRX590)
 - Added the water tint the original shows while the camera is under water, which leaves the water surface and the shoreline in the colors they have in the dry room (TRX560)
+- Added pickup aids (Graphic Options → Visuals → Pickup aids) (TRX1355)
+- Added inventory option models (TRX1357)
 - Changed a flip to move the group of rooms the trigger names, rather than every flip room in the level (TRX173)
 - Fixed animations that move an item sideways playing with the item standing still, such as TR4's guide shimmy (TRX1062)
 - Fixed creatures walking through squares a pushable block stands on (TRX1060)
@@ -195,6 +213,7 @@
 - Fixed a crash while an in-game cutscene poses Lara (TRX1059)
 - Fixed characters sliding across the room, and Lara's braid trailing behind her, when an in-game cutscene moves them to a new place (TRX1270)
 - Fixed the level showing for a moment when an in-game cutscene ends (TRX1252)
+- Fixed Lara keeping her weapons drawn, and her flare in hand, while the screen fades into an in-game cutscene (TRX1349)
 - Fixed Lara's shadow and the flames around her when she burns staying where an in-game cutscene began, rather than following her (TRX911)
 - Fixed the light the flames cast staying where an in-game cutscene began while Lara burns, rather than following her (TRX1197)
 - Fixed Von Croy's shadow floating at the height of his knees during the scenes he plays in Angkor Wat (TRX911)
@@ -263,6 +282,7 @@
 - Added `trx.fx.fog_bulbs` and `trx.fx.fog_color`, so a script can read level fog bulbs and set the distance fog color (TRX658)
 - Added more world effects to `trx.fx`: explosions, fires, splashes, ripples, footprints, underwater blood and blast rings
 - Added `trx.fx.sparks`, so a script can throw the particles the games use for smoke, flames, sparks and splashes, and read or change every live particle
+- Changed `require()` to also look for `<module>/init.lua`, so modules can grow into multiple files without changing how callers require them.
 - Changed the in-game overlay to be drawn by a script rather than by the engine, so what it shows and where it sits can be changed without a build
 - Changed `trx.cutscenes` to hand over the cutscene itself, so `trx.cutscenes[30]` says whether it has played, plays it, and narrows the cutscene events to it; the cutscene events hand one over too, and the functions that take a number are deprecated (TRX1199)
 - Changed `trx.cutscenes.play()` to take whether to fade out first, so a scene that opens a level begins on the black screen the level loaded behind (TRX1063)
