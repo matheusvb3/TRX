@@ -41,6 +41,7 @@
 - Changed the preset confirmation to offer Apply and Go back as choices, rather than leaving the keys unsaid (#6258 / TRX1126)
 - Changed the F9 key to cycle the lighting model in TR3 and TR4, and the lighting contrast in TR1 and TR2
 - Changed the save, load, level select and mod dialogs to show scroll arrows in every game, as TR1 does (TRX547)
+- Changed the statistics window when a level complete to only appear when there's no fade happening (foobar)
 - Changed vertex snapping to offer Disabled, 320x240, and Upscale Res modes (#6278 / TRX1137)
 - Changed screenshots taken inside photo mode to not include debug overlay elements
 - Changed the pause behavior to be consistent between FMVs and in-game cutscenes (#6537)
