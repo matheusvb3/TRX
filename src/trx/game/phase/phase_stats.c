@@ -206,7 +206,7 @@ static void M_Draw(PHASE *const phase)
         p->args.background_type, progress, p->args.background_path);
     Output_Flush();
 
-    if (p->ui_active) {
+    if (p->ui_active && p->state == STATE_DISPLAY) {
         UI_StatsDialog(p->ui_state);
     }
 }
