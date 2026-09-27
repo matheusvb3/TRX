@@ -20,6 +20,8 @@
 #define M_LADDER_CLEARANCE (-STEPUP_HEIGHT) // = -384
 // clang-format on
 
+// teste
+
 static bool M_IsAbyssLanding(
     const ITEM *const item, const COLL_INFO *const coll)
 {
@@ -33,6 +35,8 @@ static int16_t M_GetLandedBadState(const ITEM *const item)
     return Anim_HasChange(Item_GetAnim(item), LS(LS_DEATH)) ? LS(LS_DEATH)
                                                             : LS(LS_STOP);
 }
+
+// teste teste teste
 
 static bool M_CanGrab(const COLL_INFO *const coll)
 {
